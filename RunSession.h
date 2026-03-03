@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <string>
-// #include "IModifier.h"
+#include "IModifier.h"
+using namespace std;
 
 class RunSession 
 {
@@ -11,7 +12,7 @@ private:
     int currentRound;
     int totalScore;
     bool isRunActive;
-    // std::vector<IModifier*> activeModifiers;
+    vector<IModifier*> activeModifiers;
 
 public:
     RunSession();
@@ -22,7 +23,7 @@ public:
     void enterShop();
     void endRun();
     
-    // void addModifier(IModifier* newMod);
+    void addModifier(IModifier* newMod);
 };
 
 #endif

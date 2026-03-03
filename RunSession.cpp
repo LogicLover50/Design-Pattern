@@ -1,15 +1,17 @@
 #include "RunSession.h"
 #include <iostream>
-#using namespace std;
+using namespace std;
 
 RunSession::RunSession() : currentRound(1), totalScore(0), isRunActive(false) {}
 
-void RunSession::startRun() {
+void RunSession::startRun() 
+{
     isRunActive = true;
-    std::cout << "--- Starting New Run ---" << std::endl;
+    cout << "--- Starting New Run ---" << endl;
     
-    while (isRunActive && currentRound <= 3) {
-        std::cout << "\nROUND " << currentRound << std::endl;
+    while (isRunActive && currentRound <= 3) 
+    {
+        cout << "\nROUND " << currentRound << endl;
         playHand();
         enterShop();
         currentRound++;
@@ -18,34 +20,45 @@ void RunSession::startRun() {
     endRun();
 }
 
-void RunSession::playHand() {
-    int baseScore = 100; // Simplified for now
+void RunSession::playHand() 
+{
+    int baseScore = 100;
     int finalScore = baseScore;
 
-    std::cout << "Playing hand... Base Score: " << baseScore << std::endl;
+    cout << "Playing hand... Base Score: " << baseScore << endl;
 
-    // This is the "Decorator-like" behavior:
-    // We loop through modifiers and let each one change the score.
-    for (auto mod : activeModifiers) {
+    for (auto mod : activeModifiers) 
+    {
         finalScore = mod->apply(finalScore); 
     }
 
     totalScore += finalScore;
-    std::cout << "Final Hand Score: " << finalScore << std::endl;
-    std::cout << "Total Run Score: " << totalScore << std::endl;
+    cout << "Final Hand Score: " << finalScore << endl;
+    cout << "Total Run Score: " << totalScore << endl;
 }
 
-void RunSession::enterShop() {
-    std::cout << "[Shop] Would you like to buy a Modifier? (y/n): ";
-    // Here is where you will eventually call your ModifierFactory
+void RunSession::enterShop() 
+{
+    cout << "[Shop] Would you like to buy a Modifier? (y/n): ";
 }
 
-void RunSession::endRun() {
+void RunSession::endRun() 
+{
     isRunActive = false;
-    std::cout << "\n--- Run Over ---" << std::endl;
-    std::cout << "Final Total Score: " << totalScore << std::endl;
+    cout << "\n--- Run Over ---" << endl;
+    cout << "Final Total Score: " << totalScore << endl;
 }
 
-void RunSession::addModifier(IModifier* newMod) {
+void RunSession::addModifier(IModifier* newMod) 
+{
     activeModifiers.push_back(newMod);
+}
+
+RunSession::~RunSession()
+{
+    for (auto mod : activeModifiers)
+    {
+        delete mod;
+    }
+    activeModifiers.clear();
 }
